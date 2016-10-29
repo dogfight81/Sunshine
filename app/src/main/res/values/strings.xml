@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Sunshine</string>
+    <string name="action.item.refresh">refresh</string>
+    <string name="action.item.setting">setting</string>
+</resources>
