@@ -1,5 +1,6 @@
 package ivan.sunshine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_setting) {
+            startActivity(new Intent(this, SettingActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 }
