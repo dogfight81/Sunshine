@@ -1,9 +1,13 @@
-package ivan.sunshine;
+package ivan.sunshine.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import ivan.sunshine.fragments.PlaceHolderFragment;
+import ivan.sunshine.R;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -25,6 +29,9 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_setting) {
+            startActivity(new Intent(this, SettingActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 }

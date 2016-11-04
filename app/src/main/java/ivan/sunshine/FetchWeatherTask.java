@@ -16,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 
+import ivan.sunshine.fragments.ForecastFragment;
+
 
 public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
@@ -67,7 +69,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
                 return null;
             }
             forecastJsonStr = buffer.toString();
-
+            Log.d("logTag", forecastJsonStr);
 
         } catch (IOException e) {
             Log.e("ForecastFragment", "Error ", e);

@@ -1,23 +1,22 @@
-package ivan.sunshine;
+package ivan.sunshine.fragments;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-public class SettingActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+import ivan.sunshine.R;
+
+public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        addPreferencesFromResource(R.xml.pref_general);
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.key_pref_location)));
     }
 
-    private void indPreferenceSummaryToValue (Preference preference) {
-        preference.setOnPreferenceChangeListener(this);
-        onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), " "));
-    }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -32,5 +31,10 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
             preference.setSummary(value);
         }
         return true;
+    }
+
+    private void bindPreferenceSummaryToValue (Preference preference) {
+        preference.setOnPreferenceChangeListener(this);
+        onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), " "));
     }
 }

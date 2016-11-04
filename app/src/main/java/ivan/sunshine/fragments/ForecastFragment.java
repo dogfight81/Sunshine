@@ -1,7 +1,9 @@
-package ivan.sunshine;
+package ivan.sunshine.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -16,6 +18,10 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import ivan.sunshine.FetchWeatherTask;
+import ivan.sunshine.R;
+import ivan.sunshine.activities.DetailActivity;
 
 public class ForecastFragment extends ListFragment implements AdapterView.OnItemClickListener {
 
@@ -63,7 +69,9 @@ public class ForecastFragment extends ListFragment implements AdapterView.OnItem
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_refresh) {
             FetchWeatherTask fTask = new FetchWeatherTask(this);
-            fTask.execute("Cherkasy");
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String location = preferences.getString(getString(R.string.key_pref_location), getString(R.string.text_pref_location_default));
+            fTask.execute(location);
             return true;
         }
         return super.onOptionsItemSelected(item);

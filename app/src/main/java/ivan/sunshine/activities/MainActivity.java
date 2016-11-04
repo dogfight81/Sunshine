@@ -1,10 +1,13 @@
-package ivan.sunshine;
+package ivan.sunshine.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import ivan.sunshine.R;
+import ivan.sunshine.fragments.ForecastFragment;
 
 public class MainActivity extends AppCompatActivity {
 

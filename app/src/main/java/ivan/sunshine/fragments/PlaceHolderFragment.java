@@ -1,4 +1,4 @@
-package ivan.sunshine;
+package ivan.sunshine.fragments;
 
 
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import ivan.sunshine.R;
 
 
 public class PlaceHolderFragment extends Fragment {
