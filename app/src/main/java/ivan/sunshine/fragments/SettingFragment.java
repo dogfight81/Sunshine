@@ -26,7 +26,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
             ListPreference listPreference = (ListPreference) preference;
             int prefIndex = listPreference.findIndexOfValue(value);
             if (prefIndex >= 0) {
-                preference.setSummary(value);
+                preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
         } else {
             preference.setSummary(value);

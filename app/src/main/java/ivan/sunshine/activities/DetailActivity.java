@@ -2,7 +2,9 @@ package ivan.sunshine.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,6 +12,8 @@ import ivan.sunshine.fragments.PlaceHolderFragment;
 import ivan.sunshine.R;
 
 public class DetailActivity extends AppCompatActivity {
+
+    public static final String FORECAST_SHARE_HASHTAG = " #Sunshine App";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,11 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+        ShareActionProvider actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        if (actionProvider != null) {
+            actionProvider.setShareIntent(createShareForecastIntent());
+        }
         return true;
     }
 
@@ -34,4 +43,13 @@ public class DetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private Intent createShareForecastIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra(Intent.EXTRA_TEXT) + FORECAST_SHARE_HASHTAG);
+        return shareIntent;
+    }
+
 }
