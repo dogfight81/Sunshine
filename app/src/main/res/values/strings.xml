@@ -7,5 +7,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title.pref.location">location</string>
     <string name="key.pref.location">location</string>
-    <string name="text.pref.location.default">Cherkasy</string>
+    <string name="value.pref.location.default">Cherkasy</string>
+    <string name="title.pref.units">temperature units</string>
+    <string name="key.pref.units">units</string>
+    <string name="value.pref.units.metric">metric</string>
+    <string name="value.pref.units.imperial">imperial</string>
 </resources>

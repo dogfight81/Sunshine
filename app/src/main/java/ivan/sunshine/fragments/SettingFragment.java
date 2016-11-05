@@ -15,6 +15,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.key_pref_location)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.key_pref_units)));
     }
 
 

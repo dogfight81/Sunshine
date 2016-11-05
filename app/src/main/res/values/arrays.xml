@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="values_pref_units">
+        <item>@string/value.pref.units.metric</item>
+        <item>@string/value.pref.units.imperial</item>
+    </string-array>
+</resources>

@@ -1,7 +1,9 @@
 package ivan.sunshine;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -108,7 +110,12 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         return dateFormat.format(time);
     }
 
-    private String formatHighLows(double high, double low) {
+    private String formatHighLows(double high, double low, String units) {
+
+        if (units.equals(forecastFragment.getString(R.string.value_pref_units_imperial))) {
+            high = (high * 1.8) + 32;
+            low = (low * 1.8) + 32;
+        }
         long roundedHigh = Math.round(high);
         long roundedLow = Math.round(low);
         return roundedHigh + "/" + roundedLow;
@@ -130,6 +137,10 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         String[] resultStr = new String[numDays];
 
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(forecastFragment.getActivity());
+        String unitType = sPrefs.getString(forecastFragment.getString(R.string.key_pref_units), forecastFragment.getString(R.string.value_pref_units_metric));
+
+
         for (int i = 0; i < weatherArray.length(); i++) {
             String day;
             String description;
@@ -142,7 +153,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
             JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
             double high = temperatureObject.getDouble(OWM_MAX);
             double low = temperatureObject.getDouble(OWM_MIN);
-            highAndLow = formatHighLows(high, low);
+            highAndLow = formatHighLows(high, low, unitType);
+
 
             day = getReadableDateString(dayForecast.getLong(OWM_DT) * 1000);
             resultStr[i] = day + " - " + description + " - " + highAndLow;
