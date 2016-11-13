@@ -4,7 +4,6 @@
     <string name="action.item.setting">setting</string>
     <string name="action.item.share">Share</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title.pref.location">location</string>
     <string name="key.pref.location">location</string>
@@ -13,5 +12,5 @@
     <string name="key.pref.units">units</string>
     <string name="value.pref.units.metric">metric</string>
     <string name="value.pref.units.imperial">imperial</string>
-    <string name="acction.item.map">map</string>
+    <string name="action.item.map">map</string>
 </resources>

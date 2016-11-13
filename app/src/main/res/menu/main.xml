@@ -6,7 +6,7 @@
         android:id="@+id/action_setting"/>
     <item
         android:id="@+id/action_map"
-        android:title="@string/acction.item.map"/>
+        android:title="@string/action.item.map"/>
 
 
 </menu>

@@ -25,7 +25,6 @@ public class ForecastFragment extends ListFragment implements AdapterView.OnItem
 
     public ArrayAdapter arrayAdapter;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,5 +77,7 @@ public class ForecastFragment extends ListFragment implements AdapterView.OnItem
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = preferences.getString(getString(R.string.key_pref_location), getString(R.string.value_pref_location_default));
         fTask.execute(location);
+
     }
+
 }

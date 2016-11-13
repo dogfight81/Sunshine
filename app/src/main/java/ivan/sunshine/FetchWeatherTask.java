@@ -4,25 +4,21 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 
 import ivan.sunshine.fragments.ForecastFragment;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
-
 
     private ForecastFragment forecastFragment;
 
@@ -32,69 +28,38 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
     @Override
     protected String[] doInBackground(String... params) {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String forecastJsonStr = null;
+        String forecastJsonStr;
 
         String format = "json";
         String units = "metric";
         String apiKey = "0f48168775da1940b5947e231b12ab89";
         int numDays = 7;
 
-        try {
-            final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
-            final String QUERY_PARAM = "q";
-            final String FORMAT_PARAM = "mode";
-            final String UNITS_PARAM = "units";
-            final String DAYS_PARAM = "cnt";
-            final String APIKEY_PARAM = "appid";
-            Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, params[0])
-                    .appendQueryParameter(FORMAT_PARAM, format)
-                    .appendQueryParameter(UNITS_PARAM, units)
-                    .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
-                    .appendQueryParameter(APIKEY_PARAM, apiKey)
-                    .build();
-            URL url = new URL(builtUri.toString());
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) return null;
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
-            }
-            if (buffer.length() == 0) {
-                return null;
-            }
-            forecastJsonStr = buffer.toString();
-            Log.d("logTag", forecastJsonStr);
+        final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+        final String QUERY_PARAM = "q";
+        final String FORMAT_PARAM = "mode";
+        final String UNITS_PARAM = "units";
+        final String DAYS_PARAM = "cnt";
+        final String APIKEY_PARAM = "appid";
 
-        } catch (IOException e) {
-            Log.e("ForecastFragment", "Error ", e);
-            return null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e("ForecastFragment", "Error ", e);
-                }
-            }
-        }
-
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendQueryParameter(QUERY_PARAM, params[0])
+                .appendQueryParameter(FORMAT_PARAM, format)
+                .appendQueryParameter(UNITS_PARAM, units)
+                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .appendQueryParameter(APIKEY_PARAM, apiKey)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(builtUri.toString()).build();
+        Response response;
         try {
+            response = client.newCall(request).execute();
+            forecastJsonStr = response.body().string();
             return getWeatherDataFromJson(forecastJsonStr, 7);
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     @Override
