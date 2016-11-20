@@ -18,6 +18,9 @@
         </activity>
         <activity android:name=".activities.DetailActivity" />
         <activity android:name=".activities.SettingActivity" />
+        <provider
+            android:authorities="ivan.sunshine"
+            android:name=".data.WeatherProvider"/>
     </application>
 
 </manifest>
